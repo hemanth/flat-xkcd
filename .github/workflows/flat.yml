@@ -15,11 +15,11 @@ jobs:
       # The first step is to check out the repository so it can read the files inside of it and do other operations
       - name: Check out repo
         uses: actions/checkout@v2
-      # This step installs node
-      - name: Setup node
-        uses: actions/setup-node@v2
+      # Deno for now
+      - name: Setup deno
+        uses: denoland/setup-deno@main
         with:
-          node-version: 16
+          deno-version: v1.x
       #  http_url and save it as downloaded_filename
       # https://github.com/hemanth/xkcd-imgs-heroku
       - name: Fetch data 
