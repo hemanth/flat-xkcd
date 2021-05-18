@@ -1,0 +1,30 @@
+name: Flat
+
+on:
+  push:
+    paths:
+      - .github/workflows/flat.yml # Only run a new workflow every time this file (flat.yaml) file changes
+  workflow_dispatch: # Required even though this is currently empty
+  schedule:
+    - cron: '0 8 * * *' # daily
+
+jobs:
+  scheduled:
+    runs-on: ubuntu-latest
+    steps: # This workflow has 3 steps
+      # The first step is to check out the repository so it can read the files inside of it and do other operations
+      - name: Check out repo
+        uses: actions/checkout@v2
+      # This step installs node
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+      #  http_url and save it as downloaded_filename
+      # https://github.com/hemanth/xkcd-imgs-heroku
+      - name: Fetch data 
+        uses: githubocto/flat@v2
+        with:
+          http_url:  https://xkcd-imgs.herokuapp.com/ # The data to fetch every day
+          downloaded_filename: xkcd-img.json # The http_url gets saved and renamed in our repository as btc-price.json
+          postprocess: postprocess.js # A postprocessing javascript
